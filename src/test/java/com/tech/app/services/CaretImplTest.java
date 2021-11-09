@@ -43,10 +43,6 @@ public class CaretImplTest {
         assertEquals("Value does not match", -0.125, actualValue, 0.0);
     }
 
-//            System.out.println(0^3); // 0
-//        System.out.println(0^-3); // ArithmaticException
-//        System.out.println(2^0);// = 1
-
     @Test
     public void shouldReturnZeroIfLeftOperandIsZero() {
         double leftOperand = 0, rightOperand = 3;
