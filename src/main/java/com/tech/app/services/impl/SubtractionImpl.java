@@ -10,4 +10,9 @@ public class SubtractionImpl implements IOperation {
             return leftOperand + rightOperand;
         return leftOperand - rightOperand;
     }
+
+    @Override
+    public int getPrecedence() {
+        return 1;
+    }
 }

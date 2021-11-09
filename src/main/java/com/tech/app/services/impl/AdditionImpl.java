@@ -8,4 +8,9 @@ public class AdditionImpl implements IOperation {
     public double calculate(double leftOperand, double rightOperand) {
         return leftOperand + rightOperand;
     }
+
+    @Override
+    public int getPrecedence() {
+        return 1;
+    }
 }

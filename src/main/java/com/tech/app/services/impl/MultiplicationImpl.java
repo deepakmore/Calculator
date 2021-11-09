@@ -9,4 +9,9 @@ public class MultiplicationImpl implements IOperation {
         if(leftOperand == 0 || rightOperand == 0) return 0;
         return leftOperand * rightOperand;
     }
+
+    @Override
+    public int getPrecedence() {
+        return 2;
+    }
 }

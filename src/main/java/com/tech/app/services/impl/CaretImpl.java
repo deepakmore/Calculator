@@ -17,6 +17,11 @@ public class CaretImpl implements IOperation {
         return isNegativeCaret? 1 / result : result;
     }
 
+    @Override
+    public int getPrecedence() {
+        return 3;
+    }
+
     public static void main(String[] args) {
 
     }
