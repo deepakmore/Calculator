@@ -2,6 +2,7 @@ package com.tech.app.validations;
 
 import com.tech.app.validations.exceptions.AlphabetOrSpecialSymbolsNotSupportedException;
 import com.tech.app.validations.exceptions.EmptyExpressionException;
+import com.tech.app.validations.exceptions.InvalidParenthesisException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorsBesidesEachOtherException;
@@ -56,6 +57,18 @@ public class ExpressionValidatorsTest {
     @Test(expected = OperatorsBesidesEachOtherException.class)
     public void shouldNotExpressionHaveOperatorsBesidesEachOther() {
         String expression = "3+6.50/34+*50";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = InvalidParenthesisException.class)
+    public void shouldNotExpressionHaveInBalancedParenthesis() {
+        String expression = "((3+6.50/34+50)";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = None.class)
+    public void shouldExpressionHaveBalancedParenthesis() {
+        String expression = "((3+6.50)/(34+50))";
         ExpressionValidator.validate(expression);
     }
 }

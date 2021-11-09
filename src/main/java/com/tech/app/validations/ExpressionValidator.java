@@ -2,6 +2,7 @@ package com.tech.app.validations;
 
 import com.tech.app.validations.exceptions.AlphabetOrSpecialSymbolsNotSupportedException;
 import com.tech.app.validations.exceptions.EmptyExpressionException;
+import com.tech.app.validations.exceptions.InvalidParenthesisException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorsBesidesEachOtherException;
@@ -20,6 +21,18 @@ public class ExpressionValidator {
         validateOperatorAtFirstPlace(expression);
         validateOperatorAtLastPlace(expression);
         validateOperatorsBesidesEachOther(expression);
+        validateParenthesis(expression);
+    }
+
+    private static void validateParenthesis(String expression) {
+        int count = 0;
+
+        for(int index = 0; index < expression.length(); index++) {
+            count = expression.charAt(index) == '(' ? count + 1 : expression.charAt(index) == ')' ? count - 1 : count;
+            if (count < 0) break;
+        }
+
+        if (count != 0) throw new InvalidParenthesisException();
     }
 
     private static void validateOperatorsBesidesEachOther(String expression) {
