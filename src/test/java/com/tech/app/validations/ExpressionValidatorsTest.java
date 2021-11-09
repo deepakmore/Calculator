@@ -3,10 +3,11 @@ package com.tech.app.validations;
 import com.tech.app.validations.exceptions.AlphabetOrSpecialSymbolsNotSupportedException;
 import com.tech.app.validations.exceptions.EmptyExpressionException;
 import com.tech.app.validations.exceptions.InvalidParenthesisException;
+import com.tech.app.validations.exceptions.NoDigitsFoundInExpressionException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorsBesidesEachOtherException;
-import com.tech.app.validations.exceptions.SingleOperandFoundException;
+import com.tech.app.validations.exceptions.SingleOperandFoundOrNoOperatorException;
 import org.junit.Test;
 
 import static org.junit.Test.*;
@@ -79,21 +80,39 @@ public class ExpressionValidatorsTest {
         ExpressionValidator.validate(expression);
     }
 
-    @Test(expected = SingleOperandFoundException.class)
+    @Test(expected = SingleOperandFoundOrNoOperatorException.class)
     public void shouldNotExpressionHaveSingleOperand() {
         String expression = "10";
         ExpressionValidator.validate(expression);
     }
 
-    @Test(expected = SingleOperandFoundException.class)
+    @Test(expected = SingleOperandFoundOrNoOperatorException.class)
     public void shouldNotExpressionHaveSingleOperandWithDecimalPointer() {
         String expression = "10.20";
         ExpressionValidator.validate(expression);
     }
 
-    @Test(expected = SingleOperandFoundException.class)
+    @Test(expected = SingleOperandFoundOrNoOperatorException.class)
     public void shouldNotExpressionHaveSingleOperandWithParenthesis() {
         String expression = "(10)";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = SingleOperandFoundOrNoOperatorException.class)
+    public void shouldNotExpressionHaveSingleOperandOrNoOperatorsWithParenthesis() {
+        String expression = "(10(20)(50))";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = Exception.class)
+    public void shouldNotExpressionHaveOnlyParenthesis() {
+        String expression = "()";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = NoDigitsFoundInExpressionException.class)
+    public void shouldNotExpressionHaveCombinationOfParenthesisAndOperators() {
+        String expression = "(+)";
         ExpressionValidator.validate(expression);
     }
 }

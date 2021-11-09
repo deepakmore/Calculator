@@ -3,16 +3,18 @@ package com.tech.app.validations;
 import com.tech.app.validations.exceptions.AlphabetOrSpecialSymbolsNotSupportedException;
 import com.tech.app.validations.exceptions.EmptyExpressionException;
 import com.tech.app.validations.exceptions.InvalidParenthesisException;
+import com.tech.app.validations.exceptions.NoDigitsFoundInExpressionException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorsBesidesEachOtherException;
-import com.tech.app.validations.exceptions.SingleOperandFoundException;
+import com.tech.app.validations.exceptions.SingleOperandFoundOrNoOperatorException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_AND_MATH_OPERATORS_REGEX;
 import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_WITH_DECIMAL_POINTER_REGEX;
+import static com.tech.app.constants.CalculatorConstants.ONLY_OPERATORS_WITH_DECIMAL_POINTER_REGEX;
 import static com.tech.app.constants.CalculatorConstants.SUPPORTED_OPERATORS;
 
 public class ExpressionValidator {
@@ -29,10 +31,10 @@ public class ExpressionValidator {
     }
 
     private static void validateNoDigits(String expression) {
-        Pattern pattern = Pattern.compile(ONLY_DIGITS_WITH_DECIMAL_POINTER_REGEX);
+        Pattern pattern = Pattern.compile(ONLY_OPERATORS_WITH_DECIMAL_POINTER_REGEX);
         Matcher matcher = pattern.matcher(expression);
         if(matcher.matches()) {
-            throw new SingleOperandFoundException();
+            throw new NoDigitsFoundInExpressionException();
         }
     }
 
@@ -40,7 +42,7 @@ public class ExpressionValidator {
         Pattern pattern = Pattern.compile(ONLY_DIGITS_WITH_DECIMAL_POINTER_REGEX);
         Matcher matcher = pattern.matcher(expression);
         if(matcher.matches()) {
-            throw new SingleOperandFoundException();
+            throw new SingleOperandFoundOrNoOperatorException();
         }
     }
 
