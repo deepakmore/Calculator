@@ -4,6 +4,7 @@ import com.tech.app.validations.exceptions.AlphabetOrSpecialSymbolsNotSupportedE
 import com.tech.app.validations.exceptions.EmptyExpressionException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
+import com.tech.app.validations.exceptions.OperatorsBesidesEachOtherException;
 import org.junit.Test;
 
 import static org.junit.Test.*;
@@ -49,6 +50,12 @@ public class ExpressionValidatorsTest {
     @Test(expected = None.class)
     public void shouldExpressionHaveBasicMathsOperatorSupport() {
         String expression = "3+6.50/34*50";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = OperatorsBesidesEachOtherException.class)
+    public void shouldNotExpressionHaveOperatorsBesidesEachOther() {
+        String expression = "3+6.50/34+*50";
         ExpressionValidator.validate(expression);
     }
 }

@@ -4,6 +4,7 @@ import com.tech.app.validations.exceptions.AlphabetOrSpecialSymbolsNotSupportedE
 import com.tech.app.validations.exceptions.EmptyExpressionException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
+import com.tech.app.validations.exceptions.OperatorsBesidesEachOtherException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -18,6 +19,19 @@ public class ExpressionValidator {
         validateAlphabetsAndSpecialOperators(expression);
         validateOperatorAtFirstPlace(expression);
         validateOperatorAtLastPlace(expression);
+        validateOperatorsBesidesEachOther(expression);
+    }
+
+    private static void validateOperatorsBesidesEachOther(String expression) {
+        boolean isOperator = false;
+
+        for (int index = 0; index < expression.length(); index++) {
+            char c = expression.charAt(index);
+            if(isOperator && SUPPORTED_OPERATORS.contains(String.valueOf(c))) {
+                throw new OperatorsBesidesEachOtherException();
+            }
+            isOperator = SUPPORTED_OPERATORS.contains(String.valueOf(c));
+        }
     }
 
     private static void validateAlphabetsAndSpecialOperators(String expression) {
