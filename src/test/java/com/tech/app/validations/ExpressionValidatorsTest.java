@@ -50,6 +50,12 @@ public class ExpressionValidatorsTest {
         ExpressionValidator.validate(expression);
     }
 
+    @Test(expected = AlphabetOrSpecialSymbolsNotSupportedException.class)
+    public void shouldNotExpressionHaveRectangularBrackets() {
+        String expression = "[3+ab$6]";
+        ExpressionValidator.validate(expression);
+    }
+
     @Test(expected = None.class)
     public void shouldExpressionHaveDecimalPointerSupport() {
         String expression = "3+6.50";
