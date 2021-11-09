@@ -1,16 +1,31 @@
 package com.tech.app.validations;
 
-import com.tech.app.constants.CalculatorConstants;
+import com.tech.app.validations.exceptions.AlphabetOrSpecialSymbolsNotSupportedException;
 import com.tech.app.validations.exceptions.EmptyExpressionException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_AND_MATH_OPERATORS_REGEX;
+import static com.tech.app.constants.CalculatorConstants.SUPPORTED_OPERATORS;
 
 public class ExpressionValidator {
 
     public static void validate(String expression) {
         validateEmptyExpression(expression);
+        validateAlphabetsAndSpecialOperators(expression);
         validateOperatorAtFirstPlace(expression);
         validateOperatorAtLastPlace(expression);
+    }
+
+    private static void validateAlphabetsAndSpecialOperators(String expression) {
+       Pattern pattern = Pattern.compile(ONLY_DIGITS_AND_MATH_OPERATORS_REGEX);
+       Matcher matcher = pattern.matcher(expression);
+       if(!matcher.matches()) {
+           throw new AlphabetOrSpecialSymbolsNotSupportedException();
+       }
     }
 
     private static void validateEmptyExpression(String expression) {
@@ -20,13 +35,13 @@ public class ExpressionValidator {
     }
 
     private static void validateOperatorAtFirstPlace(String expression) {
-        if(CalculatorConstants.supportedOperators.contains(String.valueOf(expression.charAt(0)))) {
+        if(SUPPORTED_OPERATORS.contains(String.valueOf(expression.charAt(0)))) {
             throw new OperatorAtFirstPlaceNotSupportedException();
         }
     }
 
     private static void validateOperatorAtLastPlace(String expression) {
-        if(CalculatorConstants.supportedOperators.contains(
+        if(SUPPORTED_OPERATORS.contains(
                 String.valueOf(expression.charAt(expression.length() - 1)))
         ) {
             throw new OperatorAtLastPlaceNotSupportedException();

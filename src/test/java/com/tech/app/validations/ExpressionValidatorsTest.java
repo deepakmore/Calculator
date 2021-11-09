@@ -1,9 +1,12 @@
 package com.tech.app.validations;
 
+import com.tech.app.validations.exceptions.AlphabetOrSpecialSymbolsNotSupportedException;
 import com.tech.app.validations.exceptions.EmptyExpressionException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
 import org.junit.Test;
+
+import static org.junit.Test.*;
 
 public class ExpressionValidatorsTest {
 
@@ -22,6 +25,30 @@ public class ExpressionValidatorsTest {
     @Test(expected = OperatorAtLastPlaceNotSupportedException.class)
     public void shouldNotExpressionEndsWithOperator() {
         String expression = "3+8+6+";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = AlphabetOrSpecialSymbolsNotSupportedException.class)
+    public void shouldNotExpressionHaveAlphabets() {
+        String expression = "3+ab+6";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = AlphabetOrSpecialSymbolsNotSupportedException.class)
+    public void shouldNotExpressionHaveSpecialSymbol() {
+        String expression = "3+ab$6";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = None.class)
+    public void shouldExpressionHaveDecimalPointerSupport() {
+        String expression = "3+6.50";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = None.class)
+    public void shouldExpressionHaveBasicMathsOperatorSupport() {
+        String expression = "3+6.50/34*50";
         ExpressionValidator.validate(expression);
     }
 }
