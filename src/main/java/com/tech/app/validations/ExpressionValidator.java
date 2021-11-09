@@ -6,22 +6,33 @@ import com.tech.app.validations.exceptions.InvalidParenthesisException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorsBesidesEachOtherException;
+import com.tech.app.validations.exceptions.SingleOperandFoundException;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_AND_MATH_OPERATORS_REGEX;
+import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_REGEX;
 import static com.tech.app.constants.CalculatorConstants.SUPPORTED_OPERATORS;
 
 public class ExpressionValidator {
 
     public static void validate(String expression) {
         validateEmptyExpression(expression);
+        validateSingleOperandOrNoOperator(expression);
         validateAlphabetsAndSpecialOperators(expression);
         validateOperatorAtFirstPlace(expression);
         validateOperatorAtLastPlace(expression);
         validateOperatorsBesidesEachOther(expression);
         validateParenthesis(expression);
+    }
+
+    private static void validateSingleOperandOrNoOperator(String expression) {
+        Pattern pattern = Pattern.compile(ONLY_DIGITS_REGEX);
+        Matcher matcher = pattern.matcher(expression);
+        if(matcher.matches()) {
+            throw new SingleOperandFoundException();
+        }
     }
 
     private static void validateParenthesis(String expression) {

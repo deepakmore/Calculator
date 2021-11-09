@@ -6,6 +6,7 @@ import com.tech.app.validations.exceptions.InvalidParenthesisException;
 import com.tech.app.validations.exceptions.OperatorAtFirstPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorAtLastPlaceNotSupportedException;
 import com.tech.app.validations.exceptions.OperatorsBesidesEachOtherException;
+import com.tech.app.validations.exceptions.SingleOperandFoundException;
 import org.junit.Test;
 
 import static org.junit.Test.*;
@@ -27,6 +28,12 @@ public class ExpressionValidatorsTest {
     @Test(expected = OperatorAtLastPlaceNotSupportedException.class)
     public void shouldNotExpressionEndsWithOperator() {
         String expression = "3+8+6+";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = OperatorAtLastPlaceNotSupportedException.class)
+    public void shouldNotExpressionHaveSingleOperandAndEndsWithOperator() {
+        String expression = "3+";
         ExpressionValidator.validate(expression);
     }
 
@@ -69,6 +76,12 @@ public class ExpressionValidatorsTest {
     @Test(expected = None.class)
     public void shouldExpressionHaveBalancedParenthesis() {
         String expression = "((3+6.50)/(34+50))";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = SingleOperandFoundException.class)
+    public void shouldNotExpressionHaveSingleOperand() {
+        String expression = "10";
         ExpressionValidator.validate(expression);
     }
 }
