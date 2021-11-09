@@ -84,4 +84,16 @@ public class ExpressionValidatorsTest {
         String expression = "10";
         ExpressionValidator.validate(expression);
     }
+
+    @Test(expected = SingleOperandFoundException.class)
+    public void shouldNotExpressionHaveSingleOperandWithDecimalPointer() {
+        String expression = "10.20";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test(expected = SingleOperandFoundException.class)
+    public void shouldNotExpressionHaveSingleOperandWithParenthesis() {
+        String expression = "(10)";
+        ExpressionValidator.validate(expression);
+    }
 }

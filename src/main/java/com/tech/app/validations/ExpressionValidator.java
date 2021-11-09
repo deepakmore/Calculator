@@ -12,7 +12,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_AND_MATH_OPERATORS_REGEX;
-import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_REGEX;
+import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_WITH_DECIMAL_POINTER_REGEX;
 import static com.tech.app.constants.CalculatorConstants.SUPPORTED_OPERATORS;
 
 public class ExpressionValidator {
@@ -20,6 +20,7 @@ public class ExpressionValidator {
     public static void validate(String expression) {
         validateEmptyExpression(expression);
         validateSingleOperandOrNoOperator(expression);
+        validateNoDigits(expression);
         validateAlphabetsAndSpecialOperators(expression);
         validateOperatorAtFirstPlace(expression);
         validateOperatorAtLastPlace(expression);
@@ -27,8 +28,16 @@ public class ExpressionValidator {
         validateParenthesis(expression);
     }
 
+    private static void validateNoDigits(String expression) {
+        Pattern pattern = Pattern.compile(ONLY_DIGITS_WITH_DECIMAL_POINTER_REGEX);
+        Matcher matcher = pattern.matcher(expression);
+        if(matcher.matches()) {
+            throw new SingleOperandFoundException();
+        }
+    }
+
     private static void validateSingleOperandOrNoOperator(String expression) {
-        Pattern pattern = Pattern.compile(ONLY_DIGITS_REGEX);
+        Pattern pattern = Pattern.compile(ONLY_DIGITS_WITH_DECIMAL_POINTER_REGEX);
         Matcher matcher = pattern.matcher(expression);
         if(matcher.matches()) {
             throw new SingleOperandFoundException();
