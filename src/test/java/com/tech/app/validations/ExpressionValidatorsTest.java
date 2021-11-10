@@ -26,6 +26,12 @@ public class ExpressionValidatorsTest {
         ExpressionValidator.validate(expression);
     }
 
+    @Test(expected = None.class)
+    public void shouldNotRestrictIfStartsWithNegativeOperator() {
+        String expression = "-3+8";
+        ExpressionValidator.validate(expression);
+    }
+
     @Test(expected = OperatorAtLastPlaceNotSupportedException.class)
     public void shouldNotExpressionEndsWithOperator() {
         String expression = "3+8+6+";

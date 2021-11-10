@@ -12,6 +12,7 @@ import com.tech.app.validations.exceptions.SingleOperandFoundOrNoOperatorExcepti
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static com.tech.app.constants.CalculatorConstants.FIRST_PLACE_SUPPORTED_OPERATORS;
 import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_AND_MATH_OPERATORS_REGEX;
 import static com.tech.app.constants.CalculatorConstants.ONLY_DIGITS_WITH_DECIMAL_POINTER_REGEX;
 import static com.tech.app.constants.CalculatorConstants.ONLY_OPERATORS_WITH_DECIMAL_POINTER_REGEX;
@@ -84,7 +85,7 @@ public class ExpressionValidator {
     }
 
     private static void validateOperatorAtFirstPlace(String expression) {
-        if(SUPPORTED_OPERATORS.contains(String.valueOf(expression.charAt(0)))) {
+        if(FIRST_PLACE_SUPPORTED_OPERATORS.contains(String.valueOf(expression.charAt(0)))) {
             throw new OperatorAtFirstPlaceNotSupportedException();
         }
     }
