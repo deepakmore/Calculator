@@ -14,7 +14,8 @@ public class Application {
         do {
             try {
                 String expression = UserInputUtil.getInputFromUser(USER_INPUT_MESSAGE);
-                Calculator calculator = new Calculator(expression);
+                Calculator calculator = Calculator.getInstance();
+                calculator.setExpression(expression);
                 System.out.println(calculator.evaluateExpression());
             } catch (Exception ex) {
                 System.out.println(ex.getMessage());
