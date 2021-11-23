@@ -1,8 +1,11 @@
 package com.tech.app.services.impl;
 
-import com.tech.app.services.IOperation;
+import com.tech.app.services.IBinaryOperations;
+import lombok.Getter;
 
-public class SubtractionImpl implements IOperation {
+public class SubtractionImpl implements IBinaryOperations {
+    @Getter
+    String iperator = "-";
 
     @Override
     public double calculate(double leftOperand, double rightOperand) {
