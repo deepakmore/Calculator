@@ -1,8 +1,8 @@
 package com.tech.app.services.impl;
 
-import com.tech.app.services.IOperation;
+import com.tech.app.services.IBinaryOperations;
 
-public class AdditionImpl implements IOperation {
+public class AdditionImpl implements IBinaryOperations {
 
     @Override
     public double calculate(double leftOperand, double rightOperand) {

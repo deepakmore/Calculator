@@ -8,7 +8,7 @@ import static jdk.nashorn.internal.objects.Global.Infinity;
 import static org.junit.Assert.assertEquals;
 
 public class CaretImplTest {
-    IOperation operation;
+    IBinaryOperations operation;
 
     @Before
     public void setUp() throws Exception {

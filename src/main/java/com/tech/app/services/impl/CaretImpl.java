@@ -1,8 +1,9 @@
 package com.tech.app.services.impl;
 
-import com.tech.app.services.IOperation;
+import com.tech.app.services.IBinaryOperations;
+import com.tech.app.services.IPrecedenceProvider;
 
-public class CaretImpl implements IOperation {
+public class CaretImpl implements IBinaryOperations, IPrecedenceProvider {
 
     @Override
     public double calculate(double leftOperand, double rightOperand) {
@@ -20,9 +21,5 @@ public class CaretImpl implements IOperation {
     @Override
     public int getPrecedence() {
         return 3;
-    }
-
-    public static void main(String[] args) {
-
     }
 }

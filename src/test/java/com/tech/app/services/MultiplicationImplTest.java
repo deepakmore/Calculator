@@ -7,7 +7,7 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 
 public class MultiplicationImplTest {
-    IOperation operation;
+    IBinaryOperations operation;
 
     @Before
     public void setUp() throws Exception {
