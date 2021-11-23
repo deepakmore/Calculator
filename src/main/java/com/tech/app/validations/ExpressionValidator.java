@@ -97,4 +97,6 @@ public class ExpressionValidator {
             throw new OperatorAtLastPlaceNotSupportedException();
         }
     }
+
+
 }

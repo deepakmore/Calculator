@@ -26,6 +26,7 @@ public class ExpressionUtil {
                 case '-': return OperatorsEnum.SUBTRACT;
                 case '*': return OperatorsEnum.MULTIPLY;
                 case '/': return OperatorsEnum.DIVIDE;
+                case '#' : return OperatorsEnum.HASH;
             }
         }
         return OperatorsEnum.BLANK;

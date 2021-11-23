@@ -127,4 +127,16 @@ public class ExpressionValidatorsTest {
         String expression = "(+)";
         ExpressionValidator.validate(expression);
     }
+
+    @Test
+    public void shouldValidateExpressionWithHashSign() {
+        String expression = "2#";
+        ExpressionValidator.validate(expression);
+    }
+
+    @Test
+    public void shouldValidateComplexExpressionWithHashSign() {
+        String expression = "3+2+2#";
+        ExpressionValidator.validate(expression);
+    }
 }

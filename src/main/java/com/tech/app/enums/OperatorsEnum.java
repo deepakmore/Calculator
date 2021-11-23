@@ -6,5 +6,6 @@ public enum OperatorsEnum {
     MULTIPLY,
     DIVIDE,
     BLANK,
+    HASH,
     CARET
 }
