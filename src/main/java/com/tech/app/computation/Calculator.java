@@ -2,27 +2,30 @@ package com.tech.app.computation;
 
 import com.tech.app.enums.OperatorsEnum;
 import com.tech.app.exceptions.InvalidExpressionException;
-import com.tech.app.services.impl.AdditionImpl;
-import com.tech.app.services.impl.CaretImpl;
-import com.tech.app.services.impl.DivisionImpl;
-import com.tech.app.services.impl.MultiplicationImpl;
-import com.tech.app.services.impl.SubtractionImpl;
+import com.tech.app.services.impl.*;
 import com.tech.app.validations.ExpressionValidator;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 import java.util.Stack;
 
-import static com.tech.app.utils.ExpressionUtil.convertNumbersToDoubleWithSingleDecimalPrecision;
-import static com.tech.app.utils.ExpressionUtil.parseNumber;
-import static com.tech.app.utils.ExpressionUtil.parseOperator;
-import static com.tech.app.utils.ExpressionUtil.removeBlankSpaces;
+import static com.tech.app.utils.ExpressionUtil.*;
 
+@Setter
 @Getter
-@AllArgsConstructor
 public class Calculator {
 
+    private static Calculator calculator;
     String expression;
+
+    private Calculator() { }
+
+    public static Calculator getInstance() {
+        if(calculator == null) {
+            calculator = new Calculator();
+        }
+        return calculator;
+    }
 
     public double evaluateExpression() {
         preprocess();
@@ -75,7 +78,7 @@ public class Calculator {
                 double second = numberStack.pop();
                 double first = numberStack.pop();
                 OperatorsEnum op = operatorStack.pop();
-                double result = applyOperator(first, op, second);
+                double result = applyOperator(op, first, second);
                 numberStack.push(result);
             } else {
                 break;
@@ -83,14 +86,15 @@ public class Calculator {
         }
     }
 
-    protected double applyOperator(double left, OperatorsEnum operator, double right){
+    protected double applyOperator(OperatorsEnum operator, double ...args) {
         switch (operator){
-            case ADD: return new AdditionImpl().calculate(left, right);
-            case SUBTRACT: return new SubtractionImpl().calculate(left, right);
-            case MULTIPLY: return new MultiplicationImpl().calculate(left, right);
-            case DIVIDE: return new DivisionImpl().calculate(left, right);
-            case CARET: return new CaretImpl().calculate(left, right);
-            default: return right;
+            case ADD: return new AdditionImpl().calculate(args[0], args[1]);
+            case SUBTRACT: return new SubtractionImpl().calculate(args[0], args[1]);
+            case MULTIPLY: return new MultiplicationImpl().calculate(args[0], args[1]);
+            case DIVIDE: return new DivisionImpl().calculate(args[0], args[1]);
+            case CARET: return new CaretImpl().calculate(args[0], args[1]);
+            case HASH: return new PostIncrementOperationsImpl().calculate(args[0]);
+            default: return args[1];
         }
     }
 
@@ -101,6 +105,7 @@ public class Calculator {
             case MULTIPLY: return new MultiplicationImpl().getPrecedence();
             case DIVIDE: return new DivisionImpl().getPrecedence();
             case CARET: return new CaretImpl().getPrecedence();
+            case HASH: return new PostIncrementOperationsImpl().getPrecedence();
             case BLANK:
             default:
                 return 0;
